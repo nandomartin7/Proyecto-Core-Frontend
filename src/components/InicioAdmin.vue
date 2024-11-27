@@ -885,7 +885,7 @@ export default {
     
     //Metodo fetch Objetos
     fetchAutomoviles(){
-      axios.get('https://artistic-smile-production.up.railway.app/automovil')
+      axios.get('http://localhost:8080/automovil')
         .then(response => {
           this.automoviles = response.data;
         })
@@ -895,7 +895,7 @@ export default {
         })
     },
     fetchClientes(){
-      axios.get('https://artistic-smile-production.up.railway.app/cliente')
+      axios.get('http://localhost:8080/cliente')
         .then(response => {
           this.clientes = response.data;
         })
@@ -905,7 +905,7 @@ export default {
         })
     },
     fetchContratos(){
-      axios.get('https://artistic-smile-production.up.railway.app/contrato')
+      axios.get('http://localhost:8080/contrato')
         .then(response => {
           this.contratos = response.data;
         })
@@ -914,7 +914,7 @@ export default {
         })
     },
     fetchEmpleados(){
-      axios.get('https://artistic-smile-production.up.railway.app/empleado')
+      axios.get('http://localhost:8080/empleado')
         .then(response => {
           this.empleados = response.data;
         })
@@ -923,7 +923,7 @@ export default {
         })
     },
     fetchPlanes(){
-      axios.get('https://artistic-smile-production.up.railway.app/plan')
+      axios.get('http://localhost:8080/plan')
         .then(response => {
           this.planes = response.data;
         })
@@ -932,7 +932,7 @@ export default {
         })
     },
     fetchUsos(){
-      axios.get('https://artistic-smile-production.up.railway.app/uso')
+      axios.get('http://localhost:8080/uso')
         .then(response => {
           this.usos = response.data;
         })
@@ -950,22 +950,22 @@ export default {
 
     //Metodos para enviar formulario y agregar un nuevo objeto
     submitAutomovil(){
-      axios.post('https://artistic-smile-production.up.railway.app/automovil', this.nuevoAutomovil)
+      axios.post('http://localhost:8080/automovil', this.nuevoAutomovil)
         .then(() => {
           this.fetchAutomoviles();
           this.resetAtomovil();
-          this.$router.push('/inicio-admin');
+          this.$router.push('/admin/inicio');
         })
         .catch(error => {
           console.error(error);
         });
     },
     submitCliente(){
-      axios.post('https://artistic-smile-production.up.railway.app/cliente', this.nuevoCliente)
+      axios.post('http://localhost:8080/cliente', this.nuevoCliente)
         .then(() => {
           this.fetchClientes();
           this.resetCliente();
-          this.$router.push('/inicio-admin');
+          this.$router.push('/admin/inicio');
         })
         .catch(error => {
           console.error(error);
@@ -980,44 +980,44 @@ export default {
         this.nuevoContrato.fechaFinalizacion = fechaFinalizacion.toString();
       }
 
-      axios.post('https://artistic-smile-production.up.railway.app/contrato', this.nuevoContrato)
+      axios.post('http://localhost:8080/contrato', this.nuevoContrato)
         .then(() => {
             this.fetchContratos();
             this.resetContrato();
-            this.$router.push('/inicio-admin');
+            this.$router.push('/admin/inicio');
           })
           .catch(error => {
             console.error(error);
           });
     },
     submitEmpleado(){
-      axios.post('https://artistic-smile-production.up.railway.app/empleado', this.nuevoEmpleado)
+      axios.post('http://localhost:8080/empleado', this.nuevoEmpleado)
         .then(() => {
           this.fetchEmpleados();
           this.resetEmpleado();
-          this.$router.push('/inicio-admin');
+          this.$router.push('/admin/inicio');
         })
         .catch(error => {
           console.error(error);
         });
     },
     submitPlan(){
-      axios.post('https://artistic-smile-production.up.railway.app/plan', this.nuevoPlan)
+      axios.post('http://localhost:8080/plan', this.nuevoPlan)
         .then(() => {
           this.fetchPlanes();
           this.resetPlan();
-          this.$router.push('/inicio-admin');
+          this.$router.push('/admin/inicio');
         })
         .catch(error => {
           console.error(error);
         });
     },
     submitUso(){
-      axios.post('https://artistic-smile-production.up.railway.app/uso', this.nuevoUso)
+      axios.post('http://localhost:8080/uso', this.nuevoUso)
         .then(() => {
             this.fetchUsos();
             this.resetUso();
-            this.$router.push('/inicio-admin');
+            this.$router.push('/admin/inicio');
           })
           .catch(error => {
             console.error(error);
@@ -1147,7 +1147,7 @@ export default {
 
     //Metodo para guardar cambios de actualizacion de datos
     guardarCambiosAutomovil(){  
-      axios.put(`https://artistic-smile-production.up.railway.app/automovil/${this.automovilEditando.idAutomovil}`, this.automovilEditando)
+      axios.put(`http://localhost:8080/automovil/${this.automovilEditando.idAutomovil}`, this.automovilEditando)
         .then(response => {
           this.fetchAutomoviles();
           this.cancelarEdicion();
@@ -1162,7 +1162,7 @@ export default {
         });      
     },
     guardarCambiosCliente() {
-      axios.put(`https://artistic-smile-production.up.railway.app/cliente/${this.clienteEditando.idCliente}`, this.clienteEditando)
+      axios.put(`http://localhost:8080/cliente/${this.clienteEditando.idCliente}`, this.clienteEditando)
         .then(response => {
           this.fetchClientes();
           this.cancelarEdicion();
@@ -1177,7 +1177,7 @@ export default {
         });  
     },
     guardarCambiosContrato(){
-      axios.put(`https://artistic-smile-production.up.railway.app/contrato/${this.contratoEditando.idContrato}`, this.contratoEditando)
+      axios.put(`http://localhost:8080/contrato/${this.contratoEditando.idContrato}`, this.contratoEditando)
         .then(response => {
           this.fetchContratos();
           this.cancelarEdicion();
@@ -1192,7 +1192,7 @@ export default {
         });  
     },
     guardarCambiosEmpleado(){
-      axios.put(`https://artistic-smile-production.up.railway.app/empleado/${this.empleadoEditando.idEmpleado}`, this.empleadoEditando)
+      axios.put(`http://localhost:8080/empleado/${this.empleadoEditando.idEmpleado}`, this.empleadoEditando)
         .then(response => {
           this.fetchEmpleados();
           this.cancelarEdicion();
@@ -1207,7 +1207,7 @@ export default {
         });  
     },
     guardarCambiosPlan(){
-      axios.put(`https://artistic-smile-production.up.railway.app/plan/${this.planEditando.idPlan}`, this.planEditando)
+      axios.put(`http://localhost:8080/plan/${this.planEditando.idPlan}`, this.planEditando)
         .then(response => {
           this.fetchPlanes();
           this.cancelarEdicion();
@@ -1222,7 +1222,7 @@ export default {
         });  
     },
     guardarCambiosUso(){
-      axios.put(`https://artistic-smile-production.up.railway.app/uso/${this.usoEditando.idUso}`, this.usoEditando)
+      axios.put(`http://localhost:8080/uso/${this.usoEditando.idUso}`, this.usoEditando)
         .then(response => {
           this.fetchUsos();
           this.cancelarEdicion();
@@ -1249,7 +1249,7 @@ export default {
 
     //Metodos para elimianr objeto en especifico
     eliminarAutomovil(idAutomovil){
-      axios.delete(`https://artistic-smile-production.up.railway.app/automovil/${idAutomovil}`)
+      axios.delete(`http://localhost:8080/automovil/${idAutomovil}`)
         .then(() => {
           this.automoviles = this.automoviles.filter(automovil => automovil.idAutomovil !== idAutomovil);
         })
@@ -1258,7 +1258,7 @@ export default {
         });
     },
     eliminarCliente(idCliente) {
-      axios.delete(`https://artistic-smile-production.up.railway.app/cliente/${idCliente}`)
+      axios.delete(`http://localhost:8080/cliente/${idCliente}`)
         .then(() => {
           this.clientes = this.clientes.filter(cliente => cliente.idCliente !== idCliente);
         })
@@ -1267,7 +1267,7 @@ export default {
         });
     },
     eliminarContrato(idContrato) {
-      axios.delete(`https://artistic-smile-production.up.railway.app/contrato/${idContrato}`)
+      axios.delete(`http://localhost:8080/contrato/${idContrato}`)
         .then(() => {
           this.contratos = this.contratos.filter(contrato => contrato.idContrato !== idContrato);
         })
@@ -1276,7 +1276,7 @@ export default {
         });
     },
     eliminarEmpleado(idEmpleado) {
-      axios.delete(`https://artistic-smile-production.up.railway.app/empleado/${idEmpleado}`)
+      axios.delete(`http://localhost:8080/empleado/${idEmpleado}`)
         .then(() => {
           this.empleados = this.empleados.filter(empleado => empleado.idEmpleado !== idEmpleado);
         })
@@ -1285,7 +1285,7 @@ export default {
         });
     },
     eliminarPlan(idPlan) {
-      axios.delete(`https://artistic-smile-production.up.railway.app/plan/${idPlan}`)
+      axios.delete(`http://localhost:8080/plan/${idPlan}`)
         .then(() => {
           this.planes = this.planes.filter(plan => plan.idPlan !== idPlan);
         })
@@ -1294,7 +1294,7 @@ export default {
         });
     },
     eliminarUso(idUso) {
-      axios.delete(`https://artistic-smile-production.up.railway.app/uso/${idUso}`)
+      axios.delete(`http://localhost:8080/uso/${idUso}`)
         .then(() => {
           this.usos = this.usos.filter(uso => uso.idUso !== idUso);
         })

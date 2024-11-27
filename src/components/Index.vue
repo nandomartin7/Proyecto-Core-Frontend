@@ -28,11 +28,11 @@ export default {
   methods: {
     login() {
       // Lógica para iniciar sesión
-      axios.post('https://artistic-smile-production.up.railway.app/admin/login', this.credentials)
+      axios.post('http://localhost:8080/admin/login', this.credentials)
         .then(response => {
             localStorage.setItem('token', response.data.token); // Guarda el token
             localStorage.setItem('role', 'admin'); //Guarda el rol
-            this.$router.push('/inicio-admin'); // Redirigir a la página principal
+            this.$router.push('/admin/inicio'); // Redirigir a la página principal
         })
         .catch(error => {
             if (error.response) {
