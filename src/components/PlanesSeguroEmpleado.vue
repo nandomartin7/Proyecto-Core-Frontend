@@ -168,7 +168,7 @@
  
     methods: {
         fetchPlanes() {
-            axios.get("http://localhost:8080/plan")
+            axios.get("https://proyecto-core-backend-production.up.railway.app/plan")
             .then((response) => {
                 this.planes = response.data;
             })
@@ -180,7 +180,7 @@
             this.showAgregarPlan = !this.showAgregarPlan;
         },
         submitPlan() {
-            axios.post("http://localhost:8080/plan", this.nuevoPlan)
+            axios.post("https://proyecto-core-backend-production.up.railway.app/plan", this.nuevoPlan)
             .then(() => {
                 this.fetchPlanes();
                 this.resetPlan()
@@ -193,7 +193,7 @@
             this.planEditando = { ...plan };
         },
         guardarCambiosPlan() {
-            axios.put(`http://localhost:8080/plan/${this.planEditando.idPlan}`, this.planEditando)
+            axios.put(`https://proyecto-core-backend-production.up.railway.app/plan/${this.planEditando.idPlan}`, this.planEditando)
             .then(() => {
                 this.fetchPlanes();
                 this.cancelarEdicion();
@@ -233,7 +233,7 @@
         cerrarSesion() {
             // Lógica para cerrar sesión
             localStorage.clear();
-            this.$router.push("/login-cliente");
+            this.$router.push("/login-empleado");
         },
     },
     mounted() {

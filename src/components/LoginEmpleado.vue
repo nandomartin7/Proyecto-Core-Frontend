@@ -62,7 +62,7 @@
 
         login() {
             // Lógica para iniciar sesión
-            axios.post('http://localhost:8080/empleado/login', this.credentials)
+            axios.post('https://proyecto-core-backend-production.up.railway.app/empleado/login', this.credentials)
             .then(response => {
                 localStorage.setItem('token', response.data.token); // Guarda el token
                 localStorage.setItem('role', 'empleado'); //Guarda el rol
@@ -81,7 +81,7 @@
         },
 
         register(){
-            axios.post('http://localhost:8080/empleado', this.newEmpleado)
+            axios.post('https://proyecto-core-backend-production.up.railway.app/empleado', this.newEmpleado)
             .then(() => {
                 this.registerMessage = "Registro exitoso. Puedes iniciar sesión ahora.";
                 this.newEmpleado.idEmpleado = ''; //Resetea el campo idCliente
@@ -118,7 +118,7 @@
     margin: auto; /* Centra el contenedor horizontalmente */
     padding: 30px; /* Espacio interior del contenedor (padding) */
     border-radius: 10px; /* Bordes redondeados */
-    background-color: #00d5ff; 
+    background-color: #333; 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra del contenedor */
     text-align: center; 
   }
@@ -126,7 +126,7 @@
   /* Título principal (Iniciar sesión / Registrarse) */
   h2 {
     text-align: center;  
-    color: #333333; 
+    color: white; 
     font-family: 'Arial', sans-serif; /* Fuente del texto */
     margin-bottom: 20px; 
   }

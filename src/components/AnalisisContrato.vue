@@ -423,7 +423,7 @@
             fetchAnalisis(){
                 const contrato = JSON.parse(localStorage.getItem("contratoAnalizar"));
                 
-                axios.get("http://localhost:8080/contrato/analisis", {
+                axios.get("https://proyecto-core-backend-production.up.railway.app/contrato/analisis", {
                     params: { idContrato: contrato.idContrato},
                 })
                 .then((response) => {
@@ -444,7 +444,7 @@
                 });
             },
             fetchUsos(){
-                axios.get("http://localhost:8080/uso/filtrar/contrato", {
+                axios.get("https://proyecto-core-backend-production.up.railway.app/uso/filtrar/contrato", {
                     params: { idContrato: this.contratoAnalizado.idContrato },
                 })
                 .then((response) => {
@@ -497,7 +497,7 @@
                 this.contratosSimilares = contratosSimilaresArray;
             },
             ajustarContrato(){
-                axios.put("http://localhost:8080/contrato/analisis/ajuste", null,{
+                axios.put("https://proyecto-core-backend-production.up.railway.app/contrato/analisis/ajuste", null,{
                     params: {
                         idContrato: this.nuevoAjusteContrato.idContrato,
                         motivoAgregado: this.nuevoAjusteContrato.motivoAgregado,
@@ -543,7 +543,7 @@
             cerrarSesion() {
                 // Lógica para cerrar sesión
                 localStorage.clear();
-                this.$router.push("/login-cliente");
+                this.$router.push("/login-empleado");
             },
         },
         mounted(){

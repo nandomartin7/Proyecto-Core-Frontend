@@ -255,7 +255,7 @@
     methods: {
         //Automovil
         validarAutomovil() {
-            axios.get(`http://localhost:8080/automovil/${this.nuevoAutomovil.idAutomovil}`)
+            axios.get(`https://proyecto-core-backend-production.up.railway.app/automovil/${this.nuevoAutomovil.idAutomovil}`)
             .then((response) => {
                 if (response.data) {
                 alert("El automóvil con esta placa ya está registrado.");
@@ -277,7 +277,7 @@
         
         //Planes
         fetchPlanes() {
-            axios.get("http://localhost:8080/plan")
+            axios.get("https://proyecto-core-backend-production.up.railway.app/plan")
             .then((response) => {
                 this.planes = response.data;
             })
@@ -351,9 +351,9 @@
             }
 
 
-            axios.post('http://localhost:8080/automovil', this.nuevoAutomovil)
+            axios.post('https://proyecto-core-backend-production.up.railway.app/automovil', this.nuevoAutomovil)
             .then(() => {
-                axios.post('http://localhost:8080/contrato', this.nuevoContrato)
+                axios.post('https://proyecto-core-backend-production.up.railway.app/contrato', this.nuevoContrato)
                 .then(() => {
                     this.limpiarCampos();
                     this.$router.push('/cliente/mis-contratos');
@@ -362,7 +362,7 @@
                     console.error(error);
                     alert("Ocurrio un error al registrar el contrato, verifique los datos e intente nuevamente");
                     
-                    axios.delete(`http://localhost:8080/automovil/${this.nuevoAutomovil.idAutomovil}`)
+                    axios.delete(`https://proyecto-core-backend-production.up.railway.app/automovil/${this.nuevoAutomovil.idAutomovil}`)
                     .then(() => {
                         alert("Intente nuevamente todo el proceso de contratación por favor.")
                     })
