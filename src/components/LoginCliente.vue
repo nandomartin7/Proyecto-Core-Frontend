@@ -62,7 +62,7 @@
 
         login() {
             // Lógica para iniciar sesión
-            axios.post('https://proyecto-core-backend-production.up.railway.app/cliente/login', this.credentials)
+            axios.post('http://localhost:8080/cliente/login', this.credentials)
             .then(response => {
                 localStorage.setItem('token', response.data.token); // Guarda el token
                 localStorage.setItem('role', 'cliente'); //Guarda el rol
@@ -81,7 +81,7 @@
         },
 
         register(){
-            axios.post('https://proyecto-core-backend-production.up.railway.app/cliente', this.newCliente)
+            axios.post('http://localhost:8080/cliente', this.newCliente)
             .then(() => {
                 this.registerMessage = "Registro exitoso. Puedes iniciar sesión ahora.";
                 this.newCliente.idCliente = ''; //Resetea el campo idCliente

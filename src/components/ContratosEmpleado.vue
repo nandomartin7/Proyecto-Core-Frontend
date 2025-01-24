@@ -89,6 +89,51 @@
         </div>
     </div>
 
+    <div class="filtrarAvanzado-contenedor">
+        <h2>Filtrar y Agrupar Usos del Seguro</h2>
+        <div>
+        <label>Fecha Inicio:</label>
+        <input type="date" v-model="FiltroTipoFechaInicio" />
+        <label>Fecha Fin:</label>
+        <input type="date" v-model="FiltroTipoFechaFin" />
+        <button @click="filtrarUsosAgrupados" class="btnFiltrar">Filtrar</button>
+        <button @click="cancelarFiltroAgrupado" class="btnCancelar">Cancelar</button>
+        </div>
+        <p v-if="mensajeErrorFiltradoAvanzado" class="mensajeError">{{ mensajeErrorFiltradoAvanzado }}</p>
+
+        <div v-if="Object.keys(usosAgrupados).length > 0">
+            <h3>Resultados Agrupados</h3>
+            <table class="tabla">
+                <thead>
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Tipo de Uso</th>
+                    <th>Detalles</th>
+                </tr>
+                </thead>
+                <tbody>
+                <template v-for="(tipos, cantidad) in usosAgrupados" :key="cantidad">
+                    <template v-for="(usos, tipo, index) in tipos" :key="tipo">
+                    <tr>
+                        <!-- Mostramos la cantidad solo en la primera fila del grupo -->
+                        <td v-if="index === 0" :rowspan="Object.keys(tipos).length">{{ cantidad }}</td>
+                        <!-- Celda para el tipo de uso -->
+                        <td>{{ tipo }}</td>
+                        <td>
+                        <ul>
+                            <li v-for="uso in usos" :key="uso.idUso">
+                                ID Uso de Seguro: {{ uso.idUso }}, ID del Contrato: {{ uso.contrato.idContrato }}, Fecha: {{ uso.fecha }}, Tipo de Uso: {{ uso.tipoUso }}
+                            </li>
+                        </ul>
+                        </td>
+                    </tr>
+                    </template>
+                </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Filtro por Fechas -->
     <div class="filtrarFechas-contenedor">
         <h2>Filtrar Contratos por Fechas</h2>
@@ -190,6 +235,10 @@ export default {
             contratoAnalizar: null,
             mensajeErrorPlan: "", 
             mensajeErrorFechas: "", 
+            FiltroTipoFechaInicio: "",
+            FiltroTipoFechaFin: "",
+            usosAgrupados: {},
+            mensajeErrorFiltradoAvanzado: "",
         };
     },
     watch:{
@@ -207,7 +256,7 @@ export default {
     },
     methods: {
         fetchAutomoviles(){
-            axios.get('https://proyecto-core-backend-production.up.railway.app/automovil')
+            axios.get('http://localhost:8080/automovil')
             .then(response => {
             this.automoviles = response.data;
             })
@@ -217,7 +266,7 @@ export default {
             })
         },
         fetchClientes(){
-            axios.get('https://proyecto-core-backend-production.up.railway.app/cliente')
+            axios.get('http://localhost:8080/cliente')
             .then(response => {
             this.clientes = response.data;
             })
@@ -227,7 +276,7 @@ export default {
             })
         },
         fetchContratos(){
-            axios.get('https://proyecto-core-backend-production.up.railway.app/contrato')
+            axios.get('http://localhost:8080/contrato')
             .then(response => {
             this.contratos = response.data;
             })
@@ -236,7 +285,7 @@ export default {
             })
         },
         fetchPlanes(){
-        axios.get('https://proyecto-core-backend-production.up.railway.app/plan')
+        axios.get('http://localhost:8080/plan')
             .then(response => {
             this.planes = response.data;
             })
@@ -269,7 +318,7 @@ export default {
             this.$router.push("/empleado/analisis-contrato");
         },
         guardarCambiosContrato() {
-            axios.put(`https://proyecto-core-backend-production.up.railway.app/contrato/${this.contratoEditando.idContrato}`, this.contratoEditando)
+            axios.put(`http://localhost:8080/contrato/${this.contratoEditando.idContrato}`, this.contratoEditando)
             .then(response => {
             this.fetchContratos();
             this.cancelarEdicion();
@@ -292,7 +341,7 @@ export default {
         buscarPorPlan() {
             this.mensajeErrorPlan = "";
             if (this.filtroPlan) {                
-                axios.get(`https://proyecto-core-backend-production.up.railway.app/contrato/filtrar/plan`, 
+                axios.get(`http://localhost:8080/contrato/filtrar/plan`, 
                 {params: { planSeguro: parseInt(this.filtroPlan)}})
                 .then((response) => {
                     this.contratosFiltradosPorPlan = response.data;
@@ -315,6 +364,7 @@ export default {
             this.filtroPlan = "";
             this.contratosFiltradosPorPlan = [];
         },
+        
         buscarPorFechas() {
             this.mensajeErrorFechas = "";
             if (!this.filtroFechaInicio || !this.filtroFechaFin){
@@ -323,7 +373,7 @@ export default {
                 return;
             }
 
-            axios.get(`https://proyecto-core-backend-production.up.railway.app/contrato/filtrar/fecha`, {
+            axios.get(`http://localhost:8080/contrato/filtrar/fecha`, {
                 params: {
                     fechaInicio: this.filtroFechaInicio,
                     fechaFin: this.filtroFechaFin
@@ -365,6 +415,40 @@ export default {
             localStorage.clear();
             this.$router.push("/login-empleado");
         },
+
+        filtrarUsosAgrupados() {
+            this.mensajeErrorFiltradoAvanzado = "";
+            if (!this.FiltroTipoFechaInicio || !this.FiltroTipoFechaFin) {
+                this.mensajeErrorFiltradoAvanzado = "Debe seleccionar ambas fechas.";
+                return;
+            }
+
+            axios.get("http://localhost:8080/uso/filtrar/tipoUso", {
+                params: {
+                    fechaInicio: this.FiltroTipoFechaInicio,
+                    fechaFin: this.FiltroTipoFechaFin,
+                },
+            })
+            .then((response) => {
+                this.usosAgrupados = response.data;
+                if (Object.keys(this.usosAgrupados).length === 0) {
+                    this.mensajeErrorFiltradoAvanzado = "No se encontraron resultados para las fechas seleccionadas.";
+                }
+            })
+            .catch((error) => {
+                console.error("Error al filtrar usos agrupados:", error);
+                this.mensajeErrorFiltradoAvanzado = "Ocurrió un error al realizar la búsqueda.";
+                this.usosAgrupados = {};
+            });
+        },
+
+        cancelarFiltroAgrupado() {
+        this.FiltroTipoFechaInicio = "";
+        this.FiltroTipoFechaFin = "";
+        this.usosAgrupados = {};
+        this.mensajeErrorFiltradoAvanzado = "";
+        },
+
     },
     mounted() {
         this.fetchAutomoviles();
